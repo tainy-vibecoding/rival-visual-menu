@@ -16,8 +16,6 @@
             background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1628 100%);
             min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
             overflow: hidden;
         }
 
@@ -61,70 +59,63 @@
             50% { transform: translate(50px, 50px); }
         }
 
-        .menu-container {
-            background: rgba(15, 22, 40, 0.95);
+        /* Боковая панель */
+        .sidebar {
+            width: 280px;
+            background: rgba(15, 22, 40, 0.98);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 2px solid rgba(255, 0, 110, 0.3);
-            padding: 40px;
-            width: 100%;
-            max-width: 500px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            animation: slideIn 0.6s ease-out;
+            border-right: 2px solid rgba(255, 0, 110, 0.2);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+            animation: slideInLeft 0.6s ease-out;
         }
 
-        @keyframes slideIn {
+        @keyframes slideInLeft {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateX(-50px);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateX(0);
             }
         }
 
-        .menu-header {
+        /* Заголовок боковой панели */
+        .sidebar-header {
             text-align: center;
-            margin-bottom: 40px;
             border-bottom: 2px solid rgba(255, 0, 110, 0.2);
             padding-bottom: 20px;
+            margin-bottom: 10px;
         }
 
-        .menu-title {
-            font-size: 32px;
+        .sidebar-title {
+            font-size: 22px;
             font-weight: 700;
             background: linear-gradient(135deg, #ff006e, #8338ec, #00d9ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
+            letter-spacing: 1.5px;
         }
 
-        .menu-subtitle {
-            font-size: 12px;
-            color: #00d9ff;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.8;
-        }
-
-        .menu-buttons {
+        /* Кнопки навигации */
+        .nav-buttons {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-bottom: 30px;
+            gap: 10px;
         }
 
-        .menu-btn {
+        .nav-btn {
             background: linear-gradient(135deg, rgba(255, 0, 110, 0.1), rgba(51, 56, 204, 0.1));
-            border: 1.5px solid rgba(255, 0, 110, 0.4);
+            border: 1.5px solid rgba(255, 0, 110, 0.3);
             color: #ffffff;
-            padding: 14px 20px;
-            font-size: 14px;
+            padding: 12px 16px;
+            font-size: 13px;
             font-weight: 600;
             border-radius: 10px;
             cursor: pointer;
@@ -133,9 +124,10 @@
             letter-spacing: 0.5px;
             position: relative;
             overflow: hidden;
+            text-align: left;
         }
 
-        .menu-btn::before {
+        .nav-btn::before {
             content: '';
             position: absolute;
             top: 0;
@@ -146,43 +138,132 @@
             transition: left 0.5s;
         }
 
-        .menu-btn:hover {
+        .nav-btn:hover {
             background: linear-gradient(135deg, rgba(255, 0, 110, 0.2), rgba(51, 56, 204, 0.2));
-            border-color: rgba(255, 0, 110, 0.7);
-            box-shadow: 0 0 20px rgba(255, 0, 110, 0.4),
-                        inset 0 0 10px rgba(255, 0, 110, 0.1);
-            transform: translateY(-2px);
+            border-color: rgba(255, 0, 110, 0.6);
+            box-shadow: 0 0 15px rgba(255, 0, 110, 0.3);
+            transform: translateX(5px);
         }
 
-        .menu-btn:active {
-            transform: translateY(0);
+        .nav-btn.active {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.3), rgba(51, 56, 204, 0.3));
+            border-color: rgba(255, 0, 110, 0.8);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
         }
 
-        .settings-section {
+        /* Основной контент */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Контейнер контента */
+        .content-container {
+            background: rgba(15, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 0, 110, 0.3);
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .content-header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(255, 0, 110, 0.2);
+            padding-bottom: 20px;
+        }
+
+        .content-title {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #00d9ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* Секции контента */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Карточки */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .card {
             background: rgba(255, 0, 110, 0.05);
             border: 1px solid rgba(255, 0, 110, 0.2);
             border-radius: 12px;
             padding: 20px;
-            margin-bottom: 20px;
+            transition: all 0.3s ease;
         }
 
-        .settings-title {
+        .card:hover {
+            background: rgba(255, 0, 110, 0.1);
+            border-color: rgba(255, 0, 110, 0.4);
+            box-shadow: 0 0 15px rgba(255, 0, 110, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .card-title {
             font-size: 12px;
             color: #00d9ff;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
             font-weight: 700;
         }
 
+        .card-value {
+            font-size: 18px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Слайдеры и переключатели */
         .slider-group {
-            margin-bottom: 15px;
+            margin: 20px 0;
         }
 
         .slider-label {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-size: 13px;
             color: #e0e0e0;
         }
@@ -214,22 +295,14 @@
             box-shadow: 0 0 20px rgba(255, 0, 110, 0.8);
         }
 
-        .slider::-moz-range-thumb {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ff006e, #8338ec);
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 0 10px rgba(255, 0, 110, 0.6);
-            transition: all 0.2s;
-        }
-
         .toggle-group {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(255, 0, 110, 0.05);
+            border-radius: 8px;
         }
 
         .toggle-label {
@@ -270,12 +343,14 @@
             transform: translateX(24px);
         }
 
-        .bottom-buttons {
+        /* Кнопки действия */
+        .action-buttons {
             display: flex;
             gap: 10px;
+            margin-top: 20px;
         }
 
-        .bottom-btn {
+        .action-btn {
             flex: 1;
             background: linear-gradient(135deg, rgba(51, 56, 204, 0.2), rgba(0, 217, 255, 0.1));
             border: 1.5px solid rgba(0, 217, 255, 0.4);
@@ -287,23 +362,68 @@
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
-        .bottom-btn:hover {
-            background: linear-gradient(135deg, rgba(51, 56, 204, 0.3), rgba(0, 217, 255, 0.2));
+        .action-btn:hover {
             border-color: rgba(0, 217, 255, 0.7);
             box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
             transform: translateY(-2px);
         }
 
-        .version-info {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        /* Скроллбар */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 0, 110, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #ff006e, #8338ec);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #ff006e, #00d9ff);
+        }
+
+        /* Адаптив для мобильных */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                padding: 15px;
+                gap: 10px;
+                border-right: none;
+                border-bottom: 2px solid rgba(255, 0, 110, 0.2);
+                overflow-x: auto;
+                overflow-y: hidden;
+            }
+
+            .sidebar-header {
+                display: none;
+            }
+
+            .nav-buttons {
+                flex-direction: row;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .content-container {
+                padding: 20px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -313,87 +433,292 @@
         <div class="floating-shape shape2"></div>
     </div>
 
-    <div class="menu-container">
-        <div class="menu-header">
-            <div class="menu-title">Rival Visual</div>
-            <div class="menu-subtitle">Visual Enhancement Mod</div>
+    <!-- Боковая панель -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">Rival Visual</div>
         </div>
-
-        <div class="menu-buttons">
-            <button class="menu-btn">📊 Визуальные Эффекты</button>
-            <button class="menu-btn">⚙️ Параметры</button>
-            <button class="menu-btn">🎨 Кастомизация</button>
-            <button class="menu-btn">📈 Производительность</button>
+        
+        <div class="nav-buttons">
+            <button class="nav-btn active" onclick="showSection('effects')">📊 Эффекты</button>
+            <button class="nav-btn" onclick="showSection('settings')">⚙️ Настройки</button>
+            <button class="nav-btn" onclick="showSection('colors')">🎨 Цвета</button>
+            <button class="nav-btn" onclick="showSection('performance')">📈 Производ.</button>
+            <button class="nav-btn" onclick="showSection('about')">ℹ️ О Моде</button>
         </div>
+    </div>
 
-        <div class="settings-section">
-            <div class="settings-title">⚡ Быстрые Настройки</div>
-
-            <div class="slider-group">
-                <div class="slider-label">
-                    <span>Яркость Эффектов</span>
-                    <span>75%</span>
+    <!-- Основной контент -->
+    <div class="main-content">
+        <div class="content-container">
+            <!-- Секция: Эффекты -->
+            <div id="effects" class="section active">
+                <div class="content-header">
+                    <div class="content-title">📊 Визуальные Эффекты</div>
                 </div>
-                <input type="range" min="0" max="100" value="75" class="slider">
+                
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-title">Свечение</div>
+                        <div class="card-value">Включено</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Частицы</div>
+                        <div class="card-value">Высокие</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Тень</div>
+                        <div class="card-value">Динамич.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Размытие</div>
+                        <div class="card-value">Среднее</div>
+                    </div>
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Яркость Эффектов</span>
+                        <span>75%</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="75" class="slider" onchange="updateValue(this)">
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Масштаб Частиц</span>
+                        <span>100%</span>
+                    </div>
+                    <input type="range" min="0" max="200" value="100" class="slider" onchange="updateValue(this)">
+                </div>
+
+                <div class="toggle-group">
+                    <span class="toggle-label">🌟 Свечение Мобов</span>
+                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                        <div class="toggle-circle"></div>
+                    </div>
+                </div>
+
+                <div class="toggle-group">
+                    <span class="toggle-label">✨ Расширенные Частицы</span>
+                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                        <div class="toggle-circle"></div>
+                    </div>
+                </div>
             </div>
 
-            <div class="slider-group">
-                <div class="slider-label">
-                    <span>Насыщенность</span>
-                    <span>60%</span>
+            <!-- Секция: Настройки -->
+            <div id="settings" class="section">
+                <div class="content-header">
+                    <div class="content-title">⚙️ Параметры</div>
                 </div>
-                <input type="range" min="0" max="100" value="60" class="slider">
+
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Уровень Детализации</span>
+                        <span>8</span>
+                    </div>
+                    <input type="range" min="1" max="10" value="8" class="slider" onchange="updateValue(this)">
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Дистанция Рендера</span>
+                        <span>256м</span>
+                    </div>
+                    <input type="range" min="64" max="512" value="256" class="slider" onchange="updateDistance(this)">
+                </div>
+
+                <div class="toggle-group">
+                    <span class="toggle-label">🔄 V-Sync</span>
+                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                        <div class="toggle-circle"></div>
+                    </div>
+                </div>
+
+                <div class="toggle-group">
+                    <span class="toggle-label">⚡ Динамическое Освещение</span>
+                    <div class="toggle-switch" onclick="toggleSwitch(this)">
+                        <div class="toggle-circle"></div>
+                    </div>
+                </div>
+
+                <div class="toggle-group">
+                    <span class="toggle-label">🎯 Ультра Настройки</span>
+                    <div class="toggle-switch" onclick="toggleSwitch(this)">
+                        <div class="toggle-circle"></div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn">Сбросить</button>
+                    <button class="action-btn">Применить</button>
+                </div>
             </div>
 
-            <div class="toggle-group">
-                <span class="toggle-label">Частицы</span>
-                <div class="toggle-switch active">
-                    <div class="toggle-circle"></div>
+            <!-- Секция: Цвета -->
+            <div id="colors" class="section">
+                <div class="content-header">
+                    <div class="content-title">🎨 Кастомизация Цветов</div>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-title">Основной Цвет</div>
+                        <div style="width: 100%; height: 40px; background: linear-gradient(135deg, #ff006e, #8338ec); border-radius: 8px; margin-top: 10px;"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Вторичный Цвет</div>
+                        <div style="width: 100%; height: 40px; background: linear-gradient(135deg, #00d9ff, #3a86ff); border-radius: 8px; margin-top: 10px;"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Акцент</div>
+                        <div style="width: 100%; height: 40px; background: linear-gradient(135deg, #ffbe0b, #fb5607); border-radius: 8px; margin-top: 10px;"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Фон</div>
+                        <div style="width: 100%; height: 40px; background: linear-gradient(135deg, #0a0e27, #1a1f3a); border-radius: 8px; margin-top: 10px; border: 1px solid rgba(255, 255, 255, 0.2);"></div>
+                    </div>
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Насыщенность</span>
+                        <span>85%</span>
+                    </div>
+                    <input type="range" min="0" max="200" value="85" class="slider" onchange="updateValue(this)">
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Контраст</span>
+                        <span>110%</span>
+                    </div>
+                    <input type="range" min="50" max="200" value="110" class="slider" onchange="updateValue(this)">
                 </div>
             </div>
 
-            <div class="toggle-group">
-                <span class="toggle-label">Свечение</span>
-                <div class="toggle-switch active">
-                    <div class="toggle-circle"></div>
+            <!-- Секция: Производительность -->
+            <div id="performance" class="section">
+                <div class="content-header">
+                    <div class="content-title">📈 Производительность</div>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-title">FPS</div>
+                        <div class="card-value">144 FPS</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">GPU Использование</div>
+                        <div class="card-value">68%</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">CPU Использование</div>
+                        <div class="card-value">45%</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Память</div>
+                        <div class="card-value">2.4 GB</div>
+                    </div>
+                </div>
+
+                <div class="toggle-group">
+                    <span class="toggle-label">🚀 Оптимизация FPS</span>
+                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                        <div class="toggle-circle"></div>
+                    </div>
+                </div>
+
+                <div class="toggle-group">
+                    <span class="toggle-label">♻️ Умное Кэширование</span>
+                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                        <div class="toggle-circle"></div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn">Очистить Кэш</button>
+                    <button class="action-btn">Оптимизировать</button>
                 </div>
             </div>
 
-            <div class="toggle-group">
-                <span class="toggle-label">Размытие</span>
-                <div class="toggle-switch">
-                    <div class="toggle-circle"></div>
+            <!-- Секция: О Моде -->
+            <div id="about" class="section">
+                <div class="content-header">
+                    <div class="content-title">ℹ️ О Моде</div>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-title">Версия</div>
+                        <div class="card-value">1.0.0</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Minecraft</div>
+                        <div class="card-value">1.20.1</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Платформа</div>
+                        <div class="card-value">Forge</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Статус</div>
+                        <div class="card-value" style="color: #00ff00;">Активна</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 20px; background: rgba(255, 0, 110, 0.05); border-radius: 12px; border: 1px solid rgba(255, 0, 110, 0.2);">
+                    <div style="color: #00d9ff; font-weight: 700; margin-bottom: 10px;">📖 Описание</div>
+                    <div style="color: #e0e0e0; line-height: 1.6; font-size: 13px;">
+                        Rival Visual — это мощный визуальный мод для Minecraft, который добавляет множество красивых эффектов, улучшает графику и позволяет полностью кастомизировать внешний вид игры. Мод оптимизирован для высокой производительности и совместим с большинством других модов.
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn">🌐 Веб-сайт</button>
+                    <button class="action-btn">📧 Контакты</button>
                 </div>
             </div>
         </div>
-
-        <div class="bottom-buttons">
-            <button class="bottom-btn">← Назад</button>
-            <button class="bottom-btn">Сохранить →</button>
-        </div>
-
-        <div class="version-info">v1.0.0 • Minecraft 1.20.1</div>
     </div>
 
     <script>
-        document.querySelectorAll('.toggle-switch').forEach(toggle => {
-            toggle.addEventListener('click', function() {
-                this.classList.toggle('active');
+        function showSection(sectionId) {
+            // Скрываем все секции
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
             });
-        });
 
-        document.querySelectorAll('.slider').forEach(slider => {
-            slider.addEventListener('input', function() {
-                const label = this.parentElement.querySelector('.slider-label span:last-child');
-                label.textContent = this.value + '%';
+            // Убираем активный класс со всех кнопок
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
-        });
 
-        document.querySelectorAll('.menu-btn, .bottom-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                console.log('Клик на кнопку:', this.textContent);
-            });
-        });
+            // Показываем выбранную секцию
+            document.getElementById(sectionId).classList.add('active');
+
+            // Добавляем активный класс нажатой кнопке
+            event.target.classList.add('active');
+        }
+
+        function toggleSwitch(element) {
+            element.classList.toggle('active');
+        }
+
+        function updateValue(slider) {
+            const label = slider.parentElement.querySelector('.slider-label span:last-child');
+            if (label) {
+                label.textContent = slider.value + '%';
+            }
+        }
+
+        function updateDistance(slider) {
+            const label = slider.parentElement.querySelector('.slider-label span:last-child');
+            if (label) {
+                label.textContent = slider.value + 'м';
+            }
+        }
     </script>
 </body>
 </html>
