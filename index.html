@@ -1,698 +1,245 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rival Visual - Minecraft Menu</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap');
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rival Visual — Modern</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg-1: #05060a;
+      --bg-2: #0b0f1a;
+      --glass: rgba(255,255,255,0.05);
+      --glass-strong: rgba(255,255,255,0.08);
+      --accent: 0, 255, 159; /* rgb for accent neon */
+      --accent-1: rgba(0,255,159,0.12);
+      --muted: rgba(255,255,255,0.45);
+      --card-radius: 22px;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Text', 'Segoe UI', Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 10% 20%, rgba(0,200,150,0.06), transparent),
+                  radial-gradient(900px 500px at 90% 80%, rgba(40,80,255,0.03), transparent),
+                  linear-gradient(180deg,var(--bg-1),var(--bg-2));
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:40px 24px;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0f0f1e 100%);
-            min-height: 100vh;
-            padding: 40px 20px;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+    .wrap{width:100%;max-width:1400px}
 
-        /* Animated Background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(0, 200, 150, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(100, 150, 255, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
-            animation: bgShift 15s ease infinite;
-        }
+    /* top search */
+    .top{
+      display:flex;justify-content:center;margin-bottom:34px
+    }
 
-        @keyframes bgShift {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(20px, 20px); }
-        }
+    .search{
+      width:520px;max-width:92%;
+      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border-radius:40px;padding:12px 18px;border:1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(18px) saturate(120%);
+      display:flex;align-items:center;gap:12px;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+    }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
+    .search input{
+      border:0;background:transparent;color:var(--muted);outline:none;font-size:15px;font-weight:600;width:100%
+    }
 
-        /* Search Bar */
-        .search-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 60px;
-            animation: slideDown 0.8s ease-out;
-        }
+    /* cards row */
+    .cards{
+      display:grid;grid-template-columns:repeat(5,1fr);gap:20px;align-items:start
+    }
 
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    /* card base */
+    .card{
+      border-radius:var(--card-radius);padding:26px 20px;position:relative;overflow:hidden;
+      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border:1px solid rgba(255,255,255,0.04);
+      backdrop-filter: blur(20px) saturate(120%);
+      transition:transform .45s cubic-bezier(.2,.9,.2,1), box-shadow .45s, border-color .45s;
+      min-height:520px;display:flex;flex-direction:column;
+    }
 
-        .search-box {
-            width: 100%;
-            max-width: 550px;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border: 1.5px solid rgba(255, 255, 255, 0.15);
-            border-radius: 30px;
-            padding: 14px 24px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 15px;
-            font-weight: 500;
-            outline: none;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
+    /* rim gradient */
+    .card::after{
+      content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
+      background:linear-gradient(120deg, rgba(0,255,159,0.06), rgba(70,150,255,0.04));
+      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite:exclude; /* fallback */
+    }
 
-        .search-box::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-            font-weight: 500;
-        }
+    /* center large active card */
+    .card.active{transform:translateY(-18px) scale(1.02);border-color:rgba(var(--accent),0.55);box-shadow:0 40px 80px rgba(0,0,0,0.6), 0 0 40px rgba(var(--accent),0.08)}
 
-        .search-box:focus {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(0, 200, 150, 0.6);
-            box-shadow: 0 8px 40px rgba(0, 200, 150, 0.2),
-                        0 0 20px rgba(0, 200, 150, 0.1);
-            transform: translateY(-2px);
-        }
+    .card .icon{
+      width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.04);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+    }
 
-        /* Cards Container */
-        .cards-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 24px;
-            margin-bottom: 50px;
-            animation: fadeInUp 1s ease-out 0.2s both;
-        }
+    .card.active .icon{background:linear-gradient(135deg, rgba(var(--accent),0.14), rgba(var(--accent),0.08));color:rgb(var(--accent));box-shadow:0 6px 30px rgba(var(--accent),0.12)}
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .title{font-size:18px;font-weight:800;margin-bottom:18px;letter-spacing:-0.6px}
 
-        /* Card */
-        .card {
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(30px);
-            border: 1.5px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            padding: 28px;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.08);
-        }
+    .items{flex:1;display:flex;flex-direction:column;gap:12px;overflow:auto;padding-right:6px}
+    .items::-webkit-scrollbar{width:6px}
+    .items::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.06);border-radius:6px}
 
-        /* Card Glow Effect */
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.03) 50%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
+    .item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.02)}
+    .item .name{font-weight:700;color:rgba(255,255,255,0.85);font-size:13px}
 
-        .card:hover::before {
-            opacity: 1;
-        }
+    .toggle{font-weight:800;font-size:11px;padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:rgba(255,255,255,0.45);cursor:pointer;transition:all .25s}
+    .toggle.on{background:linear-gradient(90deg, rgba(var(--accent),0.22), rgba(80,170,255,0.06));color:rgb(var(--accent));box-shadow:0 6px 18px rgba(var(--accent),0.08);border-color:rgba(var(--accent),0.2)}
 
-        .card:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.12);
-            transform: translateY(-8px);
-        }
+    .special{display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;border-radius:12px;border:1px solid rgba(var(--accent),0.12);background:linear-gradient(180deg, rgba(var(--accent),0.07), rgba(var(--accent),0.03));font-weight:800;color:rgb(var(--accent));margin-top:12px}
 
-        .card.active {
-            background: linear-gradient(135deg, rgba(0, 200, 150, 0.15) 0%, rgba(0, 200, 150, 0.08) 100%);
-            border-color: rgba(0, 200, 150, 0.6);
-            box-shadow: 0 20px 60px rgba(0, 200, 150, 0.25),
-                        inset 0 1px 0 rgba(0, 200, 150, 0.2);
-        }
+    .view{margin-top:12px;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:rgba(255,255,255,0.6);font-weight:800;cursor:pointer}
 
-        .card.active:hover {
-            box-shadow: 0 30px 80px rgba(0, 200, 150, 0.35),
-                        inset 0 1px 0 rgba(0, 200, 150, 0.3);
-        }
+    footer{margin-top:26px;text-align:center;color:rgba(255,255,255,0.28);font-weight:700;letter-spacing:1px}
 
-        /* Card Icon */
-        .card-icon {
-            width: 56px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 22px;
-            font-size: 26px;
-            transition: all 0.4s ease;
-        }
-
-        .card-icon.default {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
-            border-radius: 16px;
-            color: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-        }
-
-        .card:hover .card-icon.default {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.08) 100%);
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .card-icon.active-icon {
-            background: linear-gradient(135deg, rgba(0, 200, 150, 0.3) 0%, rgba(0, 200, 150, 0.15) 100%);
-            border-radius: 16px;
-            color: #00ff9f;
-            box-shadow: 0 0 20px rgba(0, 255, 159, 0.3);
-        }
-
-        .card.active .card-icon.active-icon {
-            animation: iconGlow 2s ease-in-out infinite;
-        }
-
-        @keyframes iconGlow {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(0, 255, 159, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(0, 255, 159, 0.6);
-            }
-        }
-
-        /* Card Title */
-        .card-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 22px;
-            letter-spacing: -0.5px;
-        }
-
-        /* Card Items */
-        .card-items {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-bottom: 20px;
-            min-height: 130px;
-            max-height: 280px;
-            overflow-y: auto;
-            padding-right: 4px;
-        }
-
-        .card-items::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        .card-items::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 3px;
-        }
-
-        .card-items::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
-
-        .card-items::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        .card-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.3s ease;
-        }
-
-        .card-item:last-child {
-            border-bottom: none;
-        }
-
-        .card-item:hover {
-            padding-left: 4px;
-        }
-
-        .card-item-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.75);
-            letter-spacing: -0.3px;
-        }
-
-        .card:hover .card-item-name {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .card-item-toggle {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 8px;
-            padding: 5px 12px;
-            font-size: 11px;
-            font-weight: 700;
-            color: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            letter-spacing: 0.5px;
-        }
-
-        .card-item-toggle:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.2);
-            color: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transform: translateY(-1px);
-        }
-
-        .card-item-toggle.on {
-            background: linear-gradient(135deg, rgba(0, 200, 150, 0.25) 0%, rgba(0, 200, 150, 0.15) 100%);
-            border-color: rgba(0, 200, 150, 0.6);
-            color: #00ff9f;
-            box-shadow: 0 0 15px rgba(0, 255, 159, 0.2);
-            font-weight: 700;
-        }
-
-        .card-item-toggle.on:hover {
-            background: linear-gradient(135deg, rgba(0, 200, 150, 0.35) 0%, rgba(0, 200, 150, 0.25) 100%);
-            box-shadow: 0 0 20px rgba(0, 255, 159, 0.3);
-        }
-
-        /* Special button for active card */
-        .card-special-button {
-            background: linear-gradient(135deg, rgba(0, 200, 150, 0.2) 0%, rgba(0, 200, 150, 0.1) 100%);
-            backdrop-filter: blur(10px);
-            border: 1.5px solid rgba(0, 200, 150, 0.5);
-            border-radius: 12px;
-            padding: 12px 18px;
-            color: #00ff9f;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 12px;
-            width: 100%;
-            box-shadow: 0 0 20px rgba(0, 255, 159, 0.2);
-            letter-spacing: 0.3px;
-        }
-
-        .card-special-button:hover {
-            background: linear-gradient(135deg, rgba(0, 200, 150, 0.3) 0%, rgba(0, 200, 150, 0.2) 100%);
-            box-shadow: 0 0 30px rgba(0, 255, 159, 0.35);
-            transform: translateY(-2px);
-            border-color: rgba(0, 200, 150, 0.8);
-        }
-
-        .status-indicator {
-            width: 8px;
-            height: 8px;
-            background: #00ff9f;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 10px rgba(0, 255, 159, 0.6);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 0 10px rgba(0, 255, 159, 0.6);
-            }
-            50% {
-                box-shadow: 0 0 20px rgba(0, 255, 159, 0.9);
-            }
-        }
-
-        /* View All Button */
-        .view-all-btn {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 11px;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            letter-spacing: 0.4px;
-        }
-
-        .view-all-btn:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-            color: rgba(255, 255, 255, 0.7);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transform: translateY(-1px);
-        }
-
-        .view-all-btn.default:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .card.active .view-all-btn {
-            background: rgba(0, 200, 150, 0.08);
-            border-color: rgba(0, 200, 150, 0.3);
-            color: rgba(0, 255, 159, 0.7);
-        }
-
-        .card.active .view-all-btn:hover {
-            border-color: rgba(0, 200, 150, 0.6);
-            color: #00ff9f;
-            background: rgba(0, 200, 150, 0.15);
-            box-shadow: 0 0 15px rgba(0, 255, 159, 0.2);
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.35);
-            font-size: 11px;
-            margin-top: 50px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            animation: fadeIn 1.5s ease-out 0.5s both;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .cards-container {
-                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-                gap: 20px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 20px 12px;
-            }
-
-            .container {
-                max-width: 100%;
-            }
-
-            .cards-container {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-
-            .search-box {
-                max-width: 100%;
-            }
-
-            .card {
-                padding: 20px;
-            }
-
-            .card-title {
-                font-size: 18px;
-            }
-
-            .search-container {
-                margin-bottom: 40px;
-            }
-        }
-    </style>
+    /* small screens */
+    @media(max-width:1200px){.cards{grid-template-columns:repeat(3,1fr)}.card{min-height:480px}}
+    @media(max-width:860px){.cards{grid-template-columns:repeat(2,1fr)}.card{min-height:420px}}
+    @media(max-width:520px){.cards{grid-template-columns:1fr}.search{width:100%}}
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Search Bar -->
-        <div class="search-container">
-            <input type="text" class="search-box" placeholder="🔍 Search...">
+  <div class="wrap">
+    <div class="top"><label class="search"><input placeholder="🔍 Search"/></label></div>
+
+    <div class="cards" id="cards">
+      <!-- Visual -->
+      <div class="card" data-name="visual">
+        <div class="icon">✦</div>
+        <div class="title">Visual</div>
+        <div class="items">
+          <div class="item"><div class="name">China Hat</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Target Render</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Hitbox</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Dog</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Hit Color</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">HitBubbles</div><button class="toggle">OFF</button></div>
         </div>
+        <button class="view">VIEW ALL →</button>
+      </div>
 
-        <!-- Cards Container -->
-        <div class="cards-container">
-            <!-- Visual Card -->
-            <div class="card">
-                <div class="card-icon default">✦</div>
-                <div class="card-title">Visual</div>
-                <div class="card-items">
-                    <div class="card-item">
-                        <span class="card-item-name">China Hat</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Target Render</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Hitbox</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Dog</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Hit Color</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">HitBubbles</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                </div>
-                <button class="view-all-btn default">VIEW ALL →</button>
-            </div>
-
-            <!-- World Card -->
-            <div class="card">
-                <div class="card-icon default">◆</div>
-                <div class="card-title">World</div>
-                <div class="card-items">
-                    <div class="card-item">
-                        <span class="card-item-name">New Project</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Templates</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Assets</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Publish</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">History</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                </div>
-                <button class="view-all-btn default">VIEW ALL →</button>
-            </div>
-
-            <!-- Particle Card (Active) -->
-            <div class="card active">
-                <div class="card-icon active-icon">◯</div>
-                <div class="card-title">Particle</div>
-                <div class="card-items">
-                    <div class="card-item">
-                        <span class="card-item-name">Messages</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Community</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Events</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Collaborators</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Feed</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                </div>
-                <button class="card-special-button">
-                    <span class="status-indicator"></span>
-                    No Particle
-                    <span class="card-item-toggle on">ON</span>
-                </button>
-                <button class="view-all-btn">VIEW ALL →</button>
-            </div>
-
-            <!-- Utility Card -->
-            <div class="card">
-                <div class="card-icon default">◯</div>
-                <div class="card-title">Utility</div>
-                <div class="card-items">
-                    <div class="card-item">
-                        <span class="card-item-name">AutoTotem</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">AutoSprint</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Item Swap</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Item Scroller</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Fake Player</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Aspect Ratio</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Dynamic Island</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Armor Durability</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                </div>
-                <button class="view-all-btn default">VIEW ALL →</button>
-            </div>
-
-            <!-- Client Card -->
-            <div class="card">
-                <div class="card-icon default">✦</div>
-                <div class="card-title">Client</div>
-                <div class="card-items">
-                    <div class="card-item">
-                        <span class="card-item-name">Profile</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Interface Custom</span>
-                        <button class="card-item-toggle on">Liquid</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Support</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Language</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                    <div class="card-item">
-                        <span class="card-item-name">Keybinds</span>
-                        <button class="card-item-toggle">OFF</button>
-                    </div>
-                </div>
-                <button class="view-all-btn default">VIEW ALL →</button>
-            </div>
+      <!-- World -->
+      <div class="card" data-name="world">
+        <div class="icon">◆</div>
+        <div class="title">World</div>
+        <div class="items">
+          <div class="item"><div class="name">New Project</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Templates</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Assets</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Publish</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">History</div><button class="toggle">OFF</button></div>
         </div>
+        <button class="view">VIEW ALL →</button>
+      </div>
 
-        <!-- Footer -->
-        <div class="footer">
-            • WORLD VISUAL • DEVELOPER: TAINYHUNT
+      <!-- Particle (active) -->
+      <div class="card active" data-name="particle">
+        <div class="icon">◯</div>
+        <div class="title">Particle</div>
+        <div class="items">
+          <div class="item"><div class="name">Messages</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Community</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Events</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Collaborators</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Feed</div><button class="toggle">OFF</button></div>
         </div>
+        <div class="special"><span style="width:8px;height:8px;border-radius:50%;background:rgb(var(--accent));box-shadow:0 0 14px rgba(var(--accent),0.25)"></span>No Particle <button class="toggle on">ON</button></div>
+        <button class="view">VIEW ALL →</button>
+      </div>
+
+      <!-- Utility -->
+      <div class="card" data-name="utility">
+        <div class="icon">◯</div>
+        <div class="title">Utility</div>
+        <div class="items">
+          <div class="item"><div class="name">AutoTotem</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">AutoSprint</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Item Swap</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Item Scroller</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Fake Player</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Aspect Ratio</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Dynamic Island</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Armor Durability</div><button class="toggle">OFF</button></div>
+        </div>
+        <button class="view">VIEW ALL →</button>
+      </div>
+
+      <!-- Client -->
+      <div class="card" data-name="client">
+        <div class="icon">✦</div>
+        <div class="title">Client</div>
+        <div class="items">
+          <div class="item"><div class="name">Profile</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Interface Custom</div><button class="toggle on">Liquid</button></div>
+          <div class="item"><div class="name">Support</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Language</div><button class="toggle">OFF</button></div>
+          <div class="item"><div class="name">Keybinds</div><button class="toggle">OFF</button></div>
+        </div>
+        <button class="view">VIEW ALL →</button>
+      </div>
+
     </div>
 
-    <script>
-        // Toggle ON/OFF buttons
-        document.querySelectorAll('.card-item-toggle').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (this.textContent === 'OFF') {
-                    this.textContent = 'ON';
-                    this.classList.add('on');
-                } else {
-                    this.textContent = 'OFF';
-                    this.classList.remove('on');
-                }
-            });
-        });
+    <footer>• WORLD VISUAL • DEVELOPER: TAINYHUNT</footer>
+  </div>
 
-        // Card selection
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('click', function(e) {
-                if (e.target.classList.contains('card-item-toggle') || 
-                    e.target.classList.contains('view-all-btn') ||
-                    e.target.closest('.card-item-toggle') ||
-                    e.target.closest('.view-all-btn')) {
-                    return;
-                }
-                
-                document.querySelectorAll('.card').forEach(c => {
-                    c.classList.remove('active');
-                });
-                this.classList.add('active');
-            });
-        });
+  <script>
+    // small behaviors: toggles, active card, search
+    document.querySelectorAll('.toggle').forEach(btn=>{
+      btn.addEventListener('click', e=>{
+        e.stopPropagation();
+        btn.classList.toggle('on');
+        btn.textContent = btn.classList.contains('on') ? (btn.dataset.label || 'ON') : (btn.dataset.label ? btn.dataset.off || 'OFF' : 'OFF');
+      });
+    });
 
-        // Search functionality
-        document.querySelector('.search-box').addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            document.querySelectorAll('.card').forEach(card => {
-                const text = card.textContent.toLowerCase();
-                card.style.display = text.includes(searchTerm) ? '' : 'none';
-            });
-        });
+    // keep active visual center — clicking card makes it active
+    document.querySelectorAll('.card').forEach(card=>{
+      card.addEventListener('click', ()=>{
+        document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
+        card.classList.add('active');
+        // bring to center visually by reordering grid: move active to middle
+        const parent = card.parentElement;
+        const cards = Array.from(parent.children);
+        const idx = Math.floor(cards.length/2);
+        // remove and insert
+        parent.removeChild(card);
+        if(idx >= parent.children.length) parent.appendChild(card); else parent.insertBefore(card, parent.children[idx]);
+      });
+    });
 
-        // Smooth scroll behavior
-        document.documentElement.style.scrollBehavior = 'smooth';
-    </script>
+    // search
+    const search = document.querySelector('.search input');
+    search.addEventListener('input', ()=>{
+      const q = search.value.trim().toLowerCase();
+      document.querySelectorAll('.card').forEach(card=>{
+        const text = card.textContent.toLowerCase();
+        card.style.display = q === '' || text.includes(q) ? '' : 'none';
+      });
+    });
+
+    // initialize ON/OFF text for toggles that have class on
+    document.querySelectorAll('.toggle').forEach(btn=>{
+      if(btn.classList.contains('on')) btn.textContent = btn.dataset.label || btn.textContent || 'ON';
+      else btn.textContent = btn.dataset.off || btn.textContent || 'OFF';
+    });
+  </script>
 </body>
 </html>
