@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rival Visual - Minecraft Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1628 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 20s infinite;
+        }
+
+        .shape1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            top: -100px;
+            left: -100px;
+            animation-duration: 25s;
+        }
+
+        .shape2 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #00d9ff, #3a86ff);
+            bottom: -50px;
+            right: -50px;
+            animation-duration: 30s;
+            animation-direction: reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(50px, 50px); }
+        }
+
+        .menu-container {
+            background: rgba(15, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 0, 110, 0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .menu-header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid rgba(255, 0, 110, 0.2);
+            padding-bottom: 20px;
+        }
+
+        .menu-title {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #00d9ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .menu-subtitle {
+            font-size: 12px;
+            color: #00d9ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .menu-btn {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.1), rgba(51, 56, 204, 0.1));
+            border: 1.5px solid rgba(255, 0, 110, 0.4);
+            color: #ffffff;
+            padding: 14px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .menu-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.2), rgba(51, 56, 204, 0.2));
+            border-color: rgba(255, 0, 110, 0.7);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.4),
+                        inset 0 0 10px rgba(255, 0, 110, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .menu-btn:active {
+            transform: translateY(0);
+        }
+
+        .settings-section {
+            background: rgba(255, 0, 110, 0.05);
+            border: 1px solid rgba(255, 0, 110, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .settings-title {
+            font-size: 12px;
+            color: #00d9ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .slider-group {
+            margin-bottom: 15px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #e0e0e0;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, rgba(255, 0, 110, 0.2), rgba(51, 56, 204, 0.2));
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 0, 110, 0.6);
+            transition: all 0.2s;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.8);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 10px rgba(255, 0, 110, 0.6);
+            transition: all 0.2s;
+        }
+
+        .toggle-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .toggle-label {
+            font-size: 13px;
+            color: #e0e0e0;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: rgba(255, 0, 110, 0.2);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 0, 110, 0.3);
+        }
+
+        .toggle-switch.active {
+            background: rgba(255, 0, 110, 0.5);
+            border-color: #ff006e;
+            box-shadow: 0 0 15px rgba(255, 0, 110, 0.4);
+        }
+
+        .toggle-circle {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .toggle-switch.active .toggle-circle {
+            transform: translateX(24px);
+        }
+
+        .bottom-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .bottom-btn {
+            flex: 1;
+            background: linear-gradient(135deg, rgba(51, 56, 204, 0.2), rgba(0, 217, 255, 0.1));
+            border: 1.5px solid rgba(0, 217, 255, 0.4);
+            color: #00d9ff;
+            padding: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bottom-btn:hover {
+            background: linear-gradient(135deg, rgba(51, 56, 204, 0.3), rgba(0, 217, 255, 0.2));
+            border-color: rgba(0, 217, 255, 0.7);
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .version-info {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation">
+        <div class="floating-shape shape1"></div>
+        <div class="floating-shape shape2"></div>
+    </div>
+
+    <div class="menu-container">
+        <div class="menu-header">
+            <div class="menu-title">Rival Visual</div>
+            <div class="menu-subtitle">Visual Enhancement Mod</div>
+        </div>
+
+        <div class="menu-buttons">
+            <button class="menu-btn">📊 Визуальные Эффекты</button>
+            <button class="menu-btn">⚙️ Параметры</button>
+            <button class="menu-btn">🎨 Кастомизация</button>
+            <button class="menu-btn">📈 Производительность</button>
+        </div>
+
+        <div class="settings-section">
+            <div class="settings-title">⚡ Быстрые Настройки</div>
+
+            <div class="slider-group">
+                <div class="slider-label">
+                    <span>Яркость Эффектов</span>
+                    <span>75%</span>
+                </div>
+                <input type="range" min="0" max="100" value="75" class="slider">
+            </div>
+
+            <div class="slider-group">
+                <div class="slider-label">
+                    <span>Насыщенность</span>
+                    <span>60%</span>
+                </div>
+                <input type="range" min="0" max="100" value="60" class="slider">
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Частицы</span>
+                <div class="toggle-switch active">
+                    <div class="toggle-circle"></div>
+                </div>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Свечение</span>
+                <div class="toggle-switch active">
+                    <div class="toggle-circle"></div>
+                </div>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Размытие</span>
+                <div class="toggle-switch">
+                    <div class="toggle-circle"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-buttons">
+            <button class="bottom-btn">← Назад</button>
+            <button class="bottom-btn">Сохранить →</button>
+        </div>
+
+        <div class="version-info">v1.0.0 • Minecraft 1.20.1</div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+        document.querySelectorAll('.slider').forEach(slider => {
+            slider.addEventListener('input', function() {
+                const label = this.parentElement.querySelector('.slider-label span:last-child');
+                label.textContent = this.value + '%';
+            });
+        });
+
+        document.querySelectorAll('.menu-btn, .bottom-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                console.log('Клик на кнопку:', this.textContent);
+            });
+        });
+    </script>
+</body>
+</html>
