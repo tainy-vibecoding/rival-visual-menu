@@ -12,713 +12,490 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1628 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0a0a;
             min-height: 100vh;
-            display: flex;
-            overflow: hidden;
+            padding: 40px 20px;
+            overflow-x: hidden;
         }
 
-        .background-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Search Bar */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        .search-box {
             width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        .floating-shape {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.1;
-            animation: float 20s infinite;
-        }
-
-        .shape1 {
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(135deg, #ff006e, #8338ec);
-            top: -100px;
-            left: -100px;
-            animation-duration: 25s;
-        }
-
-        .shape2 {
-            width: 200px;
-            height: 200px;
-            background: linear-gradient(135deg, #00d9ff, #3a86ff);
-            bottom: -50px;
-            right: -50px;
-            animation-duration: 30s;
-            animation-direction: reverse;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(50px, 50px); }
-        }
-
-        /* Боковая панель */
-        .sidebar {
-            width: 280px;
-            background: rgba(15, 22, 40, 0.98);
-            backdrop-filter: blur(10px);
-            border-right: 2px solid rgba(255, 0, 110, 0.2);
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            overflow-y: auto;
-            animation: slideInLeft 0.6s ease-out;
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Заголовок боковой панели */
-        .sidebar-header {
-            text-align: center;
-            border-bottom: 2px solid rgba(255, 0, 110, 0.2);
-            padding-bottom: 20px;
-            margin-bottom: 10px;
-        }
-
-        .sidebar-title {
-            font-size: 22px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #ff006e, #8338ec, #00d9ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-
-        /* Кнопки навигации */
-        .nav-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .nav-btn {
-            background: linear-gradient(135deg, rgba(255, 0, 110, 0.1), rgba(51, 56, 204, 0.1));
-            border: 1.5px solid rgba(255, 0, 110, 0.3);
-            color: #ffffff;
-            padding: 12px 16px;
-            font-size: 13px;
-            font-weight: 600;
-            border-radius: 10px;
-            cursor: pointer;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 12px 20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            outline: none;
             transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .search-box:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Cards Container */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        /* Card */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
             position: relative;
             overflow: hidden;
-            text-align: left;
-        }
-
-        .nav-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .nav-btn:hover {
-            background: linear-gradient(135deg, rgba(255, 0, 110, 0.2), rgba(51, 56, 204, 0.2));
-            border-color: rgba(255, 0, 110, 0.6);
-            box-shadow: 0 0 15px rgba(255, 0, 110, 0.3);
-            transform: translateX(5px);
-        }
-
-        .nav-btn.active {
-            background: linear-gradient(135deg, rgba(255, 0, 110, 0.3), rgba(51, 56, 204, 0.3));
-            border-color: rgba(255, 0, 110, 0.8);
-            box-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
-        }
-
-        /* Основной контент */
-        .main-content {
-            flex: 1;
-            padding: 40px;
-            overflow-y: auto;
-            animation: slideInRight 0.6s ease-out;
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Контейнер контента */
-        .content-container {
-            background: rgba(15, 22, 40, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 2px solid rgba(255, 0, 110, 0.3);
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .content-header {
-            margin-bottom: 30px;
-            border-bottom: 2px solid rgba(255, 0, 110, 0.2);
-            padding-bottom: 20px;
-        }
-
-        .content-title {
-            font-size: 28px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #ff006e, #8338ec, #00d9ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-
-        /* Секции контента */
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Карточки */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .card {
-            background: rgba(255, 0, 110, 0.05);
-            border: 1px solid rgba(255, 0, 110, 0.2);
-            border-radius: 12px;
-            padding: 20px;
-            transition: all 0.3s ease;
         }
 
         .card:hover {
-            background: rgba(255, 0, 110, 0.1);
-            border-color: rgba(255, 0, 110, 0.4);
-            box-shadow: 0 0 15px rgba(255, 0, 110, 0.2);
-            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
-        .card-title {
-            font-size: 12px;
-            color: #00d9ff;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
-            font-weight: 700;
+        .card.active {
+            background: rgba(0, 200, 150, 0.1);
+            border-color: rgba(0, 200, 150, 0.5);
         }
 
-        .card-value {
-            font-size: 18px;
-            color: #ffffff;
-            font-weight: 600;
-        }
-
-        /* Слайдеры и переключатели */
-        .slider-group {
-            margin: 20px 0;
-        }
-
-        .slider-label {
+        /* Card Icon */
+        .card-icon {
+            width: 50px;
+            height: 50px;
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 13px;
-            color: #e0e0e0;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
         }
 
-        .slider {
-            width: 100%;
-            height: 6px;
-            border-radius: 5px;
-            background: linear-gradient(90deg, rgba(255, 0, 110, 0.2), rgba(51, 56, 204, 0.2));
-            outline: none;
-            -webkit-appearance: none;
-            appearance: none;
+        .card-icon.default {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.6);
         }
 
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ff006e, #8338ec);
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(255, 0, 110, 0.6);
-            transition: all 0.2s;
+        .card-icon.active-icon {
+            background: rgba(0, 200, 150, 0.2);
+            border-radius: 12px;
+            color: #00c896;
         }
 
-        .slider::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: 0 0 20px rgba(255, 0, 110, 0.8);
+        /* Card Title */
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 20px;
         }
 
-        .toggle-group {
+        /* Card Items */
+        .card-items {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+            min-height: 120px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .card-items::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .card-items::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 2px;
+        }
+
+        .card-items::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .card-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 15px 0;
-            padding: 15px;
-            background: rgba(255, 0, 110, 0.05);
-            border-radius: 8px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
         }
 
-        .toggle-label {
+        .card-item:last-child {
+            border-bottom: none;
+        }
+
+        .card-item-name {
             font-size: 13px;
-            color: #e0e0e0;
+            color: rgba(255, 255, 255, 0.7);
         }
 
-        .toggle-switch {
-            position: relative;
-            width: 50px;
-            height: 26px;
-            background: rgba(255, 0, 110, 0.2);
-            border-radius: 13px;
+        .card-item-toggle {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
             cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 0, 110, 0.3);
+            transition: all 0.2s ease;
         }
 
-        .toggle-switch.active {
-            background: rgba(255, 0, 110, 0.5);
-            border-color: #ff006e;
-            box-shadow: 0 0 15px rgba(255, 0, 110, 0.4);
+        .card-item-toggle:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.7);
         }
 
-        .toggle-circle {
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 20px;
-            height: 20px;
-            background: white;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        .card-item-toggle.on {
+            background: rgba(0, 200, 150, 0.2);
+            border-color: rgba(0, 200, 150, 0.5);
+            color: #00c896;
         }
 
-        .toggle-switch.active .toggle-circle {
-            transform: translateX(24px);
-        }
-
-        /* Кнопки действия */
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .action-btn {
-            flex: 1;
-            background: linear-gradient(135deg, rgba(51, 56, 204, 0.2), rgba(0, 217, 255, 0.1));
-            border: 1.5px solid rgba(0, 217, 255, 0.4);
-            color: #00d9ff;
-            padding: 12px;
+        /* Special button for active card */
+        .card-special-button {
+            background: rgba(0, 200, 150, 0.15);
+            border: 1px solid rgba(0, 200, 150, 0.5);
+            border-radius: 8px;
+            padding: 10px 16px;
+            color: #00c896;
             font-size: 12px;
             font-weight: 600;
-            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 10px;
+            width: 100%;
         }
 
-        .action-btn:hover {
-            border-color: rgba(0, 217, 255, 0.7);
-            box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
-            transform: translateY(-2px);
+        .card-special-button:hover {
+            background: rgba(0, 200, 150, 0.25);
         }
 
-        /* Скроллбар */
-        ::-webkit-scrollbar {
+        .status-indicator {
             width: 8px;
+            height: 8px;
+            background: #00c896;
+            border-radius: 50%;
+            display: inline-block;
         }
 
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 0, 110, 0.05);
+        /* View All Button */
+        .view-all-btn {
+            width: 100%;
+            background: transparent;
+            border: 1px solid rgba(0, 200, 150, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            color: rgba(0, 200, 150, 0.8);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #ff006e, #8338ec);
-            border-radius: 4px;
+        .view-all-btn:hover {
+            border-color: rgba(0, 200, 150, 0.6);
+            color: #00c896;
+            background: rgba(0, 200, 150, 0.05);
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, #ff006e, #00d9ff);
+        .view-all-btn.default {
+            border-color: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.4);
         }
 
-        /* Адаптив для мобильных */
+        .view-all-btn.default:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 12px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .cards-container {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+            }
+        }
+
         @media (max-width: 768px) {
             body {
-                flex-direction: column;
+                padding: 20px 15px;
             }
 
-            .sidebar {
-                width: 100%;
-                flex-direction: row;
-                padding: 15px;
-                gap: 10px;
-                border-right: none;
-                border-bottom: 2px solid rgba(255, 0, 110, 0.2);
-                overflow-x: auto;
-                overflow-y: hidden;
-            }
-
-            .sidebar-header {
-                display: none;
-            }
-
-            .nav-buttons {
-                flex-direction: row;
-            }
-
-            .main-content {
-                padding: 20px;
-            }
-
-            .content-container {
-                padding: 20px;
-            }
-
-            .cards-grid {
+            .cards-container {
                 grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .search-box {
+                max-width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <div class="background-animation">
-        <div class="floating-shape shape1"></div>
-        <div class="floating-shape shape2"></div>
-    </div>
-
-    <!-- Боковая панель -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-title">Rival Visual</div>
+    <div class="container">
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="🔍 Search...">
         </div>
-        
-        <div class="nav-buttons">
-            <button class="nav-btn active" onclick="showSection('effects')">📊 Эффекты</button>
-            <button class="nav-btn" onclick="showSection('settings')">⚙️ Настройки</button>
-            <button class="nav-btn" onclick="showSection('colors')">🎨 Цвета</button>
-            <button class="nav-btn" onclick="showSection('performance')">📈 Производ.</button>
-            <button class="nav-btn" onclick="showSection('about')">ℹ️ О Моде</button>
+
+        <!-- Cards Container -->
+        <div class="cards-container">
+            <!-- Visual Card -->
+            <div class="card">
+                <div class="card-icon default">✦</div>
+                <div class="card-title">Visual</div>
+                <div class="card-items">
+                    <div class="card-item">
+                        <span class="card-item-name">China Hat</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Target Render</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Hitbox</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Dog</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Hit Color</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">HitBubbles</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                </div>
+                <button class="view-all-btn default">VIEW ALL →</button>
+            </div>
+
+            <!-- World Card -->
+            <div class="card">
+                <div class="card-icon default">◆</div>
+                <div class="card-title">World</div>
+                <div class="card-items">
+                    <div class="card-item">
+                        <span class="card-item-name">New Project</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Templates</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Assets</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Publish</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">History</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                </div>
+                <button class="view-all-btn default">VIEW ALL →</button>
+            </div>
+
+            <!-- Particle Card (Active) -->
+            <div class="card active">
+                <div class="card-icon active-icon">◯</div>
+                <div class="card-title">Particle</div>
+                <div class="card-items">
+                    <div class="card-item">
+                        <span class="card-item-name">Messages</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Community</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Events</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Collaborators</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Feed</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                </div>
+                <button class="card-special-button">
+                    <span class="status-indicator"></span>
+                    No Particle
+                    <span class="card-item-toggle on">ON</span>
+                </button>
+                <button class="view-all-btn">VIEW ALL →</button>
+            </div>
+
+            <!-- Utility Card -->
+            <div class="card">
+                <div class="card-icon default">◯</div>
+                <div class="card-title">Utility</div>
+                <div class="card-items">
+                    <div class="card-item">
+                        <span class="card-item-name">AutoTotem</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">AutoSprint</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Item Swap</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Item Scroller</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Fake Player</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Aspect Ratio</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Dynamic Island</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Armor Durability</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                </div>
+                <button class="view-all-btn default">VIEW ALL →</button>
+            </div>
+
+            <!-- Client Card -->
+            <div class="card">
+                <div class="card-icon default">✦</div>
+                <div class="card-title">Client</div>
+                <div class="card-items">
+                    <div class="card-item">
+                        <span class="card-item-name">Profile</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Interface Custom</span>
+                        <button class="card-item-toggle on">Liquid</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Support</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Language</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                    <div class="card-item">
+                        <span class="card-item-name">Keybinds</span>
+                        <button class="card-item-toggle">OFF</button>
+                    </div>
+                </div>
+                <button class="view-all-btn default">VIEW ALL →</button>
+            </div>
         </div>
-    </div>
 
-    <!-- Основной контент -->
-    <div class="main-content">
-        <div class="content-container">
-            <!-- Секция: Эффекты -->
-            <div id="effects" class="section active">
-                <div class="content-header">
-                    <div class="content-title">📊 Визуальные Эффекты</div>
-                </div>
-                
-                <div class="cards-grid">
-                    <div class="card">
-                        <div class="card-title">Свечение</div>
-                        <div class="card-value">Включено</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">Частицы</div>
-                        <div class="card-value">Высокие</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">Тень</div>
-                        <div class="card-value">Динамич.</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">Размытие</div>
-                        <div class="card-value">Среднее</div>
-                    </div>
-                </div>
-
-                <div class="slider-group">
-                    <div class="slider-label">
-                        <span>Яркость Эффектов</span>
-                        <span>75%</span>
-                    </div>
-                    <input type="range" min="0" max="100" value="75" class="slider" onchange="updateValue(this)">
-                </div>
-
-                <div class="slider-group">
-                    <div class="slider-label">
-                        <span>Масштаб Частиц</span>
-                        <span>100%</span>
-                    </div>
-                    <input type="range" min="0" max="200" value="100" class="slider" onchange="updateValue(this)">
-                </div>
-
-                <div class="toggle-group">
-                    <span class="toggle-label">🌟 Свечение Мобов</span>
-                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
-                        <div class="toggle-circle"></div>
-                    </div>
-                </div>
-
-                <div class="toggle-group">
-                    <span class="toggle-label">✨ Расширенные Частицы</span>
-                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
-                        <div class="toggle-circle"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Секция: Настройки -->
-            <div id="settings" class="section">
-                <div class="content-header">
-                    <div class="content-title">⚙️ Параметры</div>
-                </div>
-
-                <div class="slider-group">
-                    <div class="slider-label">
-                        <span>Уровень Детализации</span>
-                        <span>8</span>
-                    </div>
-                    <input type="range" min="1" max="10" value="8" class="slider" onchange="updateValue(this)">
-                </div>
-
-                <div class="slider-group">
-                    <div class="slider-label">
-                        <span>Дистанция Рендера</span>
-                        <span>256м</span>
-                    </div>
-                    <input type="range" min="64" max="512" value="256" class="slider" onchange="updateDistance(this)">
-                </div>
-
-                <div class="toggle-group">
-                    <span class="toggle-label">🔄 V-Sync</span>
-                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
-                        <div class="toggle-circle"></div>
-                    </div>
-                </div>
-
-                <div class="toggle-group">
-                    <span class="toggle-label">⚡ Динамическое Освещение</span>
-                    <div class="toggle-switch" onclick="toggleSwitch(this)">
-                        <div class="toggle-circle"></div>
-                    </div>
-                </div>
-
-                <div class="toggle-group">
-                    <span class="toggle-label">🎯 Ультра Настройки</span>
-                    <div class="toggle-switch" onclick="toggleSwitch(this)">
-                        <div class="toggle-circle"></div>
-                    </div>
-                </div>
-
-                <div class="action-buttons">
-                    <button class="action-btn">Сбросить</button>
-                    <button class="action-btn">Применить</button>
-                </div>
-            </div>
-
-            <!-- Секция: Цвета -->
-            <div id="colors" class="section">
-                <div class="content-header">
-                    <div class="content-title">🎨 Кастомизация Цветов</div>
-                </div>
-
-                <div class="cards-grid">
-                    <div class="card">
-                        <div class="card-title">Основной Цвет</div>
-                        <div style="width: 100%; height: 40px; background: linear-gradient(135deg, #ff006e, #8338ec); border-radius: 8px; margin-top: 10px;"></div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">Вторичный Цвет</div>
-                        <div style="width: 100%; height: 40px; background: linear-gradient(135deg, #00d9ff, #3a86ff); border-radius: 8px; margin-top: 10px;"></div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">Акцент</div>
-                        <div style="width: 100%; height: 40px; background: linear-gradient(135deg, #ffbe0b, #fb5607); border-radius: 8px; margin-top: 10px;"></div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">Фон</div>
-                        <div style="width: 100%; height: 40px; background: linear-gradient(135deg, #0a0e27, #1a1f3a); border-radius: 8px; margin-top: 10px; border: 1px solid rgba(255, 255, 255, 0.2);"></div>
-                    </div>
-                </div>
-
-                <div class="slider-group">
-                    <div class="slider-label">
-                        <span>Насыщенность</span>
-                        <span>85%</span>
-                    </div>
-                    <input type="range" min="0" max="200" value="85" class="slider" onchange="updateValue(this)">
-                </div>
-
-                <div class="slider-group">
-                    <div class="slider-label">
-                        <span>Контраст</span>
-                        <span>110%</span>
-                    </div>
-                    <input type="range" min="50" max="200" value="110" class="slider" onchange="updateValue(this)">
-                </div>
-            </div>
-
-            <!-- Секция: Производительность -->
-            <div id="performance" class="section">
-                <div class="content-header">
-                    <div class="content-title">📈 Производительность</div>
-                </div>
-
-                <div class="cards-grid">
-                    <div class="card">
-                        <div class="card-title">FPS</div>
-                        <div class="card-value">144 FPS</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">GPU Использование</div>
-                        <div class="card-value">68%</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">CPU Использование</div>
-                        <div class="card-value">45%</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">Память</div>
-                        <div class="card-value">2.4 GB</div>
-                    </div>
-                </div>
-
-                <div class="toggle-group">
-                    <span class="toggle-label">🚀 Оптимизация FPS</span>
-                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
-                        <div class="toggle-circle"></div>
-                    </div>
-                </div>
-
-                <div class="toggle-group">
-                    <span class="toggle-label">♻️ Умное Кэширование</span>
-                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
-                        <div class="toggle-circle"></div>
-                    </div>
-                </div>
-
-                <div class="action-buttons">
-                    <button class="action-btn">Очистить Кэш</button>
-                    <button class="action-btn">Оптимизировать</button>
-                </div>
-            </div>
-
-            <!-- Секция: О Моде -->
-            <div id="about" class="section">
-                <div class="content-header">
-                    <div class="content-title">ℹ️ О Моде</div>
-                </div>
-
-                <div class="cards-grid">
-                    <div class="card">
-                        <div class="card-title">Версия</div>
-                        <div class="card-value">1.0.0</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">Minecraft</div>
-                        <div class="card-value">1.20.1</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">Платформа</div>
-                        <div class="card-value">Forge</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">Статус</div>
-                        <div class="card-value" style="color: #00ff00;">Активна</div>
-                    </div>
-                </div>
-
-                <div style="margin-top: 30px; padding: 20px; background: rgba(255, 0, 110, 0.05); border-radius: 12px; border: 1px solid rgba(255, 0, 110, 0.2);">
-                    <div style="color: #00d9ff; font-weight: 700; margin-bottom: 10px;">📖 Описание</div>
-                    <div style="color: #e0e0e0; line-height: 1.6; font-size: 13px;">
-                        Rival Visual — это мощный визуальный мод для Minecraft, который добавляет множество красивых эффектов, улучшает графику и позволяет полностью кастомизировать внешний вид игры. Мод оптимизирован для высокой производительности и совместим с большинством других модов.
-                    </div>
-                </div>
-
-                <div class="action-buttons">
-                    <button class="action-btn">🌐 Веб-сайт</button>
-                    <button class="action-btn">📧 Контакты</button>
-                </div>
-            </div>
+        <!-- Footer -->
+        <div class="footer">
+            • WORLD VISUAL • DEVELOPER: TAINYHUNT
         </div>
     </div>
 
     <script>
-        function showSection(sectionId) {
-            // Скрываем все секции
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
+        // Toggle ON/OFF buttons
+        document.querySelectorAll('.card-item-toggle').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.textContent === 'OFF') {
+                    this.textContent = 'ON';
+                    this.classList.add('on');
+                } else {
+                    this.textContent = 'OFF';
+                    this.classList.remove('on');
+                }
             });
+        });
 
-            // Убираем активный класс со всех кнопок
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
+        // Card selection
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.classList.contains('card-item-toggle') || 
+                    e.target.classList.contains('view-all-btn') ||
+                    e.target.closest('.card-item-toggle') ||
+                    e.target.closest('.view-all-btn')) {
+                    return;
+                }
+                
+                document.querySelectorAll('.card').forEach(c => {
+                    c.classList.remove('active');
+                });
+                this.classList.add('active');
             });
+        });
 
-            // Показываем выбранную секцию
-            document.getElementById(sectionId).classList.add('active');
-
-            // Добавляем активный класс нажатой кнопке
-            event.target.classList.add('active');
-        }
-
-        function toggleSwitch(element) {
-            element.classList.toggle('active');
-        }
-
-        function updateValue(slider) {
-            const label = slider.parentElement.querySelector('.slider-label span:last-child');
-            if (label) {
-                label.textContent = slider.value + '%';
-            }
-        }
-
-        function updateDistance(slider) {
-            const label = slider.parentElement.querySelector('.slider-label span:last-child');
-            if (label) {
-                label.textContent = slider.value + 'м';
-            }
-        }
+        // Search functionality
+        document.querySelector('.search-box').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            document.querySelectorAll('.card').forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
     </script>
 </body>
 </html>
